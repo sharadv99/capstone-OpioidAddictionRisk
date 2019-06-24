@@ -72,6 +72,9 @@ def colFinder(df, pattern):
 ######
 def preprocess(dfIn):
 
+    #Drop fields used in report output but not in prediction
+    dfIn.drop('NAME', axis=1, inplace=True)
+
     #Gender
     prepSubtractOne(dfIn, 'IRSEX')
 
@@ -169,6 +172,7 @@ def preprocess(dfIn):
     prepRecode(dfIn, 'IREDUHIGHST2', IREDUHIGHST2)
     prepScaleAndCenter(dfIn, 'IREDUHIGHST2',
 		meanIn=12.759511226057949, stdIn=2.6718811981473394)
+        #Need to remove hardcode
 
     #Other
     prepRecode(dfIn, 'BOOKED', {1:1,2:2,3:1,85:85,94:94,97:97,98:98})
@@ -187,5 +191,6 @@ def preprocess(dfIn):
     prepRecode(dfIn, 'AGE2', AGE2)
     prepScaleAndCenter(dfIn, 'AGE2', 
 		meanIn=34.442670265002434, stdIn=16.35478216502389)
+        #Need to remove hardcode
 
     return dfIn
