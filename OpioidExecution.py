@@ -78,7 +78,7 @@ def generateReport(inputDict):
 	
     #Load Models
     model = joblib.load(dataDir+'modelXGB.model')
-    explainer = joblib.load(dataDir+'calibXGB.explainer')
+    explainer = joblib.load(dataDir+'modelXGB.explainer')
     probs = np.load(dataDir+'modelXGBPredProbs.npy')
     
     #Calculate Prediciton
