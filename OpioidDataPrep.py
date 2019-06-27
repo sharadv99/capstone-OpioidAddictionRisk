@@ -73,7 +73,8 @@ def colFinder(df, pattern):
 def preprocess(dfIn):
 
     #Drop fields used in report output but not in prediction
-    dfIn.drop('NAME', axis=1, inplace=True)
+    if 'NAME' in dfIn.columns:
+        dfIn.drop('NAME', axis=1, inplace=True)
 
     #Gender
     prepSubtractOne(dfIn, 'IRSEX')
