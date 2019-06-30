@@ -169,11 +169,15 @@ def preprocess(dfIn):
     dfIn = prepBin(dfIn, 'ADDSCEV', cutPoints)
 
     #Educaiton (one hot)
-    IREDUHIGHST2 = {1:5.0, 2:6.0, 3:7.0, 4:8.0, 5:9.0, 6:10.0, 7:11.0, 8:12.0, 9:14.0, 10:15.0, 11:16.0}
-    prepRecode(dfIn, 'IREDUHIGHST2', IREDUHIGHST2)
-    prepScaleAndCenter(dfIn, 'IREDUHIGHST2',
-		meanIn=12.759511226057949, stdIn=2.6718811981473394)
+	#Replaced IREDUHIGHST2 with EDUHIGHCAT
+    #IREDUHIGHST2 = {1:5.0, 2:6.0, 3:7.0, 4:8.0, 5:9.0, 6:10.0, 7:11.0, 8:12.0, 9:14.0, 10:15.0, 11:16.0}
+    #prepRecode(dfIn, 'IREDUHIGHST2', IREDUHIGHST2)
+    #prepScaleAndCenter(dfIn, 'IREDUHIGHST2',
+		#meanIn=12.759511226057949, stdIn=2.6718811981473394)
         #Need to remove hardcode
+		
+    cutPoints = [0,1,2,3,4,5]
+    dfIn = prepBin(dfIn, 'EDUHIGHCAT', cutPoints)
 
     #Other
     prepRecode(dfIn, 'BOOKED', {1:1,2:2,3:1,85:85,94:94,97:97,98:98})
