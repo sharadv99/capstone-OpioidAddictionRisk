@@ -141,7 +141,7 @@ def preprocess(dfIn):
     cutPoints = [0,1,2,3,9]
     dfIn = prepBin(dfIn, 'IRALCRC', cutPoints)
 
-    cutPoints = [0,1,2,3,7,10,20,30,40,50,100,150,200,250,365,991,993]
+    cutPoints = [1,11,49,99,299,365,993]
     dfIn = prepBin(dfIn, 'IRALCFY', cutPoints)  #Days used in past year
     '''Codes:
     0-365 = Days
@@ -152,7 +152,7 @@ def preprocess(dfIn):
     #'BNGDRKMON' #No action required, just including here for completeness
     #'HVYDRKMON' #No action required, just including here for completeness
 
-    cutPoints = [0, 10, 13, 15, 16, 17, 18, 19, 20, 21, 22, 23, 25, 30, 40, 50, 100, 991]
+    cutPoints = [0, 14, 17, 20, 21, 100, 991]
     dfIn = prepBin(dfIn, 'IRALCAGE', cutPoints)  #First age used alcohol
     '''Codes:
     1-78 = Years
