@@ -17,25 +17,25 @@ def prepSubtractOne(dfIn, colIn, reverse=True):
         dfIn[colIn] = 2-dfIn[colIn]
     else:
         dfIn[colIn] = dfIn[colIn]-1
-		
+        
 #Function to scale and center data
 def prepScaleAndCenter(dfIn, colIn, meanIn, stdIn):
     '''Quick function to scale and center (non-binary) numerical data'''
     dfIn[colIn] = dfIn[colIn] - meanIn
     dfIn[colIn] = dfIn[colIn] / stdIn
-	
-	#These were the original, but switched to hard code for predicitons
-	#dfIn[colIn] = dfIn[colIn] - np.mean(dfIn[colIn])
+    
+    #These were the original, but switched to hard code for predicitons
+    #dfIn[colIn] = dfIn[colIn] - np.mean(dfIn[colIn])
     #dfIn[colIn] = dfIn[colIn] / np.std(dfIn[colIn])
-	
+    
 #Function to recode a variable
 def prepRecode(dfIn, colIn, recodeDict):
     dfIn[colIn] = dfIn[colIn].map(recodeDict)
-	
+    
 def prepOneHot(dfIn, colIn, hotCols=None, dropOrigCol=True, trainOrPred='train'):
     if trainOrPred=='train':
         dfIn=pd.concat([dfIn,pd.get_dummies(dfIn[colIn],prefix=colIn,drop_first=True)],axis=1)
-		#drop_first=True to prevent multicollinearity
+        #drop_first=True to prevent multicollinearity
         if dropOrigCol:
             dfIn.drop([colIn], axis=1, inplace=True)
     else:
@@ -70,11 +70,11 @@ def prepBin(dfIn, colIn, cutPoints, dropOrigCol=True):
     if dropOrigCol:
         dfIn.drop([colIn], axis=1, inplace=True)
     return prepOneHot(dfIn, colIn+'_')
-	
+    
 #Column finder
-def colFinder(df, pattern):	    
+def colFinder(df, pattern):        
     print(list(filter(re.compile('.*'+pattern).match, df.columns)))
-	
+    
 ######
 def preprocess(dfIn):
 
@@ -86,11 +86,9 @@ def preprocess(dfIn):
     prepSubtractOne(dfIn, 'IRSEX')
 
     #Smoking
-    #dfIn = prepOneHot(dfIn, 'IRCIGRC') #Moved to Bin
     cutPoints = [0,1,2,3,4,9]
     dfIn = prepBin(dfIn, 'IRCIGRC', cutPoints)
 
-    #dfIn = prepOneHot(dfIn, 'CIGDLYMO') #Moved to Bin
     cutPoints = [0,1,2,5,91,94,97]
     dfIn = prepBin(dfIn, 'CIGDLYMO', cutPoints)
 
@@ -105,21 +103,12 @@ def preprocess(dfIn):
     998 = Blank (no answer)
     999 = Never smoked daily
     '''
-
-    #dfIn = prepOneHot(dfIn, 'IRSMKLSSREC') #Moved to Bin
-    cutPoints = [0,1,2,3,4,9]
-    dfIn = prepBin(dfIn, 'IRSMKLSSREC', cutPoints)
-	
-    #dfIn = prepOneHot(dfIn, 'IRCGRRC') #Moved to Bin
-    cutPoints = [0,1,2,3,4,9]
-    dfIn = prepBin(dfIn, 'IRCGRRC', cutPoints)
-	
-    #dfIn = prepOneHot(dfIn, 'PIPEVER') #Moved to Bin
-    cutPoints = [0,1,2,94,97]
-    dfIn = prepBin(dfIn, 'PIPEVER', cutPoints)
+    
+    prepSubtractOne(dfIn, 'FUCIG18')
+    
+    #'TOBYR' #No action required, just including here for completeness
 
     #Weed
-    #dfIn = prepOneHot(dfIn, 'IRMJRC') #Moved to Bin
     cutPoints = [0,1,2,3,9]
     dfIn = prepBin(dfIn, 'IRMJRC', cutPoints)
 
@@ -136,14 +125,23 @@ def preprocess(dfIn):
     '''
 
     prepSubtractOne(dfIn, 'FUMJ18')
-    prepSubtractOne(dfIn, 'FUMJ21')
-
+    
     #Drugs (or Drugs + Alcohol)
     #'TXYRRECVD2' #No action required, just including here for completeness
     #'TXEVRRCVD2' #No action required, just including here for completeness
-
+    
+    #The cutpoints for the following hard drugs are all the same (no need to redefine every time)
+    cutPoints = [0,1,2,3,9]
+    dfIn = prepBin(dfIn, 'IRCOCRC', cutPoints)
+    dfIn = prepBin(dfIn, 'IRCRKRC', cutPoints)
+    dfIn = prepBin(dfIn, 'IRHERRC', cutPoints)
+    dfIn = prepBin(dfIn, 'IRHALLUCREC', cutPoints)    
+    dfIn = prepBin(dfIn, 'IRLSDRC', cutPoints)    
+    dfIn = prepBin(dfIn, 'IRECSTMOREC', cutPoints)    
+    dfIn = prepBin(dfIn, 'IRINHALREC', cutPoints)    
+    dfIn = prepBin(dfIn, 'IRMETHAMREC', cutPoints)    
+    
     #Alcohol
-    #dfIn = prepOneHot(dfIn, 'IRALCRC')
     cutPoints = [0,1,2,3,9]
     dfIn = prepBin(dfIn, 'IRALCRC', cutPoints)
 
@@ -169,19 +167,19 @@ def preprocess(dfIn):
     #dfIn = prepOneHot(dfIn, 'ADDPREV')
     cutPoints = [0,1,2,85,94,97,98,99]
     dfIn = prepBin(dfIn, 'ADDPREV', cutPoints)
-	
+    
     #dfIn = prepOneHot(dfIn, 'ADDSCEV')
     cutPoints = [0,1,2,94,97,98,99]
     dfIn = prepBin(dfIn, 'ADDSCEV', cutPoints)
 
     #Educaiton (one hot)
-	#Replaced IREDUHIGHST2 with EDUHIGHCAT
+    #Replaced IREDUHIGHST2 with EDUHIGHCAT
     #IREDUHIGHST2 = {1:5.0, 2:6.0, 3:7.0, 4:8.0, 5:9.0, 6:10.0, 7:11.0, 8:12.0, 9:14.0, 10:15.0, 11:16.0}
     #prepRecode(dfIn, 'IREDUHIGHST2', IREDUHIGHST2)
     #prepScaleAndCenter(dfIn, 'IREDUHIGHST2',
-		#meanIn=12.759511226057949, stdIn=2.6718811981473394)
+        #meanIn=12.759511226057949, stdIn=2.6718811981473394)
         #Need to remove hardcode
-		
+        
     cutPoints = [0,1,2,3,4,5]
     dfIn = prepBin(dfIn, 'EDUHIGHCAT', cutPoints)
 
@@ -201,7 +199,7 @@ def preprocess(dfIn):
     impactful.'''
     prepRecode(dfIn, 'AGE2', AGE2)
     prepScaleAndCenter(dfIn, 'AGE2', 
-		meanIn=34.442670265002434, stdIn=16.35478216502389)
+        meanIn=34.442670265002434, stdIn=16.35478216502389)
         #Need to remove hardcode
 
     return dfIn
