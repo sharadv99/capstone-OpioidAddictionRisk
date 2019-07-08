@@ -2,6 +2,12 @@ import re
 import pandas as pd
 import numpy as np
 
+#Function to sort a data frame alphabetically by column name
+def sortDFbyColName(dfIn):
+    c = list(dfIn.columns)
+    c.sort()
+    return dfIn[c]
+
 #Function to subtract 1 from values
 def prepSubtractOne(dfIn, colIn, reverse=True):
     '''For variables initially coded as 1=Yes, 2=No, the reverse flag
