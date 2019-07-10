@@ -12,13 +12,13 @@ inputDict {dictionary}: The inputs from the user selections on the web form, of
         user input from the web form according to their corersponding item
         in the codebook. E.g., if the user selects 'Female' from a dropdown for 
         gender, the form returns the integer 2.
-		
-	INPUT EXAMPLE:
-	{'NAME': 'Joe Capstone', 'IRSEX': 1, 'IREDUHIGHST2': 10, 'AGE2': 16, 'IRALCRC': 2,
-	'IRALCFY': 12, 'BNGDRKMON': 1, 'HVYDRKMON': 1, 'IRALCAGE': 17, 'TXYRRECVD2': 0,
-	'TXEVRRCVD2': 0, 'IRCIGRC': 9, 'CIGDLYMO': 91, 'CIGAGE': 18, 'PIPEVER': 2,
-	'IRCGRRC': 4, 'IRSMKLSSREC': 4, 'IRMJRC': 1, 'MJYRTOT': 250, 'FUMJ18': 2, 'FUMJ21': 2,
-	'ADDPREV': 2, 'ADDSCEV': 2, 'BOOKED': 1}
+        
+    INPUT EXAMPLE:
+    {'NAME': 'Joe Capstone', 'IRSEX': 1, 'IREDUHIGHST2': 10, 'AGE2': 16, 'IRALCRC': 2,
+    'IRALCFY': 12, 'BNGDRKMON': 1, 'HVYDRKMON': 1, 'IRALCAGE': 17, 'TXYRRECVD2': 0,
+    'TXEVRRCVD2': 0, 'IRCIGRC': 9, 'CIGDLYMO': 91, 'CIGAGE': 18, 'PIPEVER': 2,
+    'IRCGRRC': 4, 'IRSMKLSSREC': 4, 'IRMJRC': 1, 'MJYRTOT': 250, 'FUMJ18': 2, 'FUMJ21': 2,
+    'ADDPREV': 2, 'ADDSCEV': 2, 'BOOKED': 1}
 
 RETURNS
 outputDict {dictionary}: The outputs of the report of format
@@ -40,7 +40,7 @@ outputDict {dictionary}: The outputs of the report of format
 def generateReport(inputDict):
     
     ##### 0. Load Libraries and Set Global Variables
-	
+    
     #Import Required Libraries
     import pandas as pd
     import numpy as np
@@ -57,7 +57,7 @@ def generateReport(inputDict):
     
     
     ##### 1. Preprocess
-	
+    
     #Convert inputs to list (pandas conversion to dataframe requires dict values to be lists)
     for k in inputDict:
         inputDict[k] = [inputDict[k]]
@@ -75,11 +75,11 @@ def generateReport(inputDict):
     
     
     ##### 2. Generate Predictions
-	
+    
     #Load Models
-    model = joblib.load(dataDir+'modelXGB.model')
-    explainer = joblib.load(dataDir+'modelXGB.explainer')
-    probs = np.load(dataDir+'modelXGBPredProbs.npy')
+    model = joblib.load(dataDir+'calibLR.model')
+    explainer = joblib.load(dataDir+'modelLRCal.explainer')
+    probs = np.load(dataDir+'modelLRCalPredProbs.npy')
     
     #Calculate Prediciton
     predProb = model.predict_proba(df)[0][1]
@@ -103,7 +103,8 @@ def generateReport(inputDict):
     for k in shapDict: #Loop through every key in the dict
         shapSum = 0.0 #Initialize at 0
         for index in shapDict[k]: #Loop through every item in the key's value (a list of column indexes)
-            shapSum += shapVal[0][index] #Add the value for each item
+            shapSum += np.array(shapVal[0])[0][index] #Add the value for each item
+            #Old version: shapVal[0][index]
         shapDict[k] = shapSum #Replace the list with the aggregated shapley value (the sum of each individual value)
 
     predFI = dict(sorted(shapDict.items(), key=operator.itemgetter(1)))
