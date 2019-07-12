@@ -89,7 +89,8 @@ def preprocess(dfIn):
     cutPoints = [0,1,2,3,4,9]
     dfIn = prepBin(dfIn, 'IRCIGRC', cutPoints)
 
-    cutPoints = [0,1,2,5,91,94,97]
+    prepRecode(dfIn, 'CIGDLYMO', {1:1,2:2,5:1,91:91,94:94,97:94,98:94})
+    cutPoints = [0,1,2,91,94]
     dfIn = prepBin(dfIn, 'CIGDLYMO', cutPoints)
 
     cutPoints = [0,10,13,15,17,18,19,20,22,25,30,40,50,99,985,991,994,997,998,999]
@@ -112,16 +113,12 @@ def preprocess(dfIn):
     cutPoints = [0,1,2,3,9]
     dfIn = prepBin(dfIn, 'IRMJRC', cutPoints)
 
-    cutPoints = [0,1,2,3,7,10,20,30,40,50,100,150,200,250,365,985,991,993,994,997,998]
-    dfIn = prepBin(dfIn, 'MJYRTOT', cutPoints)  #Days used weed in past year
+    cutPoints = [0,1,2,3,7,10,20,30,40,50,100,200,300,365,985,991,993]
+    dfIn = prepBin(dfIn, 'IRMJFY', cutPoints)  #Days used weed in past year
     '''Codes:
     0-365 = Days
-    985 = Bad Data
     991 = Never Used Weed
-    993 = Never used in past year
-    994 = Don't Know
-    997 = Refused
-    998 = Blank (no answer)
+    993 = Never used in past year    
     '''
 
     prepSubtractOne(dfIn, 'FUMJ18')
@@ -145,7 +142,7 @@ def preprocess(dfIn):
     cutPoints = [0,1,2,3,9]
     dfIn = prepBin(dfIn, 'IRALCRC', cutPoints)
 
-    cutPoints = [1,11,49,99,299,365,993]
+    cutPoints = [1,11,49,99,299,365,991,993]
     dfIn = prepBin(dfIn, 'IRALCFY', cutPoints)  #Days used in past year
     '''Codes:
     0-365 = Days
@@ -164,8 +161,8 @@ def preprocess(dfIn):
     '''
 
     #Depression
-    #dfIn = prepOneHot(dfIn, 'ADDPREV')
-    cutPoints = [0,1,2,85,94,97,98,99]
+    prepRecode(dfIn, 'ADDPREV', {1:1,2:2,85:85,94:94,97:97,98:98,99:2})
+    cutPoints = [0,1,2,85,94,97,98]
     dfIn = prepBin(dfIn, 'ADDPREV', cutPoints)
     
     #dfIn = prepOneHot(dfIn, 'ADDSCEV')
