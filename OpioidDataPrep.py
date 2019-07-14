@@ -89,9 +89,7 @@ def preprocess(dfIn):
     cutPoints = [0,1,2,3,4,9]
     dfIn = prepBin(dfIn, 'IRCIGRC', cutPoints)
 
-    prepRecode(dfIn, 'CIGDLYMO', {1:1,2:2,5:1,91:91,94:94,97:94,98:94})
-    cutPoints = [0,1,2,91,94]
-    dfIn = prepBin(dfIn, 'CIGDLYMO', cutPoints)
+    
 
     cutPoints = [0,10,13,15,17,18,19,20,22,25,30,40,50,99,985,991,994,997,998,999]
     dfIn = prepBin(dfIn, 'CIGAGE', cutPoints)  #Age when smoked daily (also catches smoked/never smoked)
@@ -150,9 +148,10 @@ def preprocess(dfIn):
     993 = Never used in past year
     '''
 
-    #'BNGDRKMON' #No action required, just including here for completeness
-    #'HVYDRKMON' #No action required, just including here for completeness
-
+    prepRecode(dfIn, 'CABINGEVR', {1:1,2:2,3:1,5:1,85:85,91:91,94:94,97:97,98:98})
+    cutPoints = [0,1,2,85,91,94,97,98]
+    dfIn = prepBin(dfIn, 'CABINGEVR', cutPoints)
+    
     cutPoints = [0, 14, 17, 20, 21, 100, 991]
     dfIn = prepBin(dfIn, 'IRALCAGE', cutPoints)  #First age used alcohol
     '''Codes:
