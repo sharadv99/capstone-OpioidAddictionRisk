@@ -73,6 +73,9 @@ def generateReport(inputDict):
     c.sort()
     df = df[c]
     
+    #Convert to numpy
+    inputArr = df.values
+    inputArr
     
     ##### 2. Generate Predictions
     
@@ -81,31 +84,37 @@ def generateReport(inputDict):
     explainer = joblib.load(dataDir+'modelLRCal.explainer')
     probs = np.load(dataDir+'modelLRCalPredProbs.npy')
     
+    #Load feature names (column names)
+    colNamesList = joblib.load(dataDir+'colNamesList.zip')
+    
     #Calculate Prediciton
-    predProb = model.predict_proba(df)[0][1]
+    predProb = model.predict_proba(inputArr)[0][1]
     
     #Calculate Percentile
     predPercentile = stats.percentileofscore(probs, predProb)/100
     
     #Generate shapley values from this row
-    shapVal = explainer.shap_values(df)
-
+    shapVal = explainer.shap_values(inputArr)
+    
     #Aggregate shapley values for one-hot vectors
     shapDict = defaultdict(list) #Handy: creates blank list if key doesn't exist, or appends to it if it does.
 
     #Get everything before the '_' character of each column name
     #Then create the column index numbers for those keys 
     #These numbers correspond to the locations in the shapley output array
-    for i, colName in enumerate(df.columns):
-        shapDict[colName.split('_')[0]].append(i)
+    for i, colName in enumerate(colNamesList):
+        shapDict[colName.split('_')[0]].append(i)        
         
     #Make a list of aggregated shapley values
     for k in shapDict: #Loop through every key in the dict
         shapSum = 0.0 #Initialize at 0
         for index in shapDict[k]: #Loop through every item in the key's value (a list of column indexes)
-            shapSum += np.array(shapVal[0])[0][index] #Add the value for each item
+            shapSum += shapVal[1][0][index] #Add the value for each item
+            #Also Old: shapSum += np.array(shapVal[0])[0][index] #Add the value for each item
             #Old version: shapVal[0][index]
-        shapDict[k] = shapSum #Replace the list with the aggregated shapley value (the sum of each individual value)
+            #print('index',index,' | k', k, ' | shapVal[1][0][index]', shapVal[1][0][index])
+        shapDict[k] = shapSum #Replace the list with the aggregated shapley value (the sum of each individual value)        
+        #print('NEXT k')
 
     predFI = dict(sorted(shapDict.items(), key=operator.itemgetter(1)))
     
