@@ -85,11 +85,9 @@ def preprocess(dfIn):
     #Gender
     prepSubtractOne(dfIn, 'IRSEX')
 
-    #Smoking
+    #Tobacco / Smoking
     cutPoints = [0,1,2,3,4,9]
     dfIn = prepBin(dfIn, 'IRCIGRC', cutPoints)
-
-    
 
     cutPoints = [0,10,13,15,17,18,19,20,22,25,30,40,50,99,985,991,994,997,998,999]
     dfIn = prepBin(dfIn, 'CIGAGE', cutPoints)  #Age when smoked daily (also catches smoked/never smoked)
@@ -106,6 +104,10 @@ def preprocess(dfIn):
     prepSubtractOne(dfIn, 'FUCIG18')
     
     #'TOBYR' #No action required, just including here for completeness
+    
+    prepRecode(dfIn, 'CIGDLYMO', {1:1,2:2,5:1,91:91,94:94,97:97,98:98})
+    cutPoints = [0,1,2,91,94,97]
+    dfIn = prepBin(dfIn, 'CIGDLYMO', cutPoints)
 
     #Weed
     cutPoints = [0,1,2,3,9]
@@ -197,5 +199,32 @@ def preprocess(dfIn):
     prepScaleAndCenter(dfIn, 'AGE2', 
         meanIn=34.442670265002434, stdIn=16.35478216502389)
         #Need to remove hardcode
-
+        
+    # Drop columns with almost no responses (<10)
+    colsToDrop = ['ADDPREV__GT2LTET85', 'CABINGEVR__GT2LTET85',
+        'CABINGEVR__GT97LTET98', 'CIGAGE__GT997LTET998',
+        'CIGAGE__GT99LTET985']
+        
+    #Also drop columns with identical or nearly identical questions (keeping 1)
+    #Never Drank Alcohol (keeping IRALCFY)
+    colsToDrop.extend(['CABINGEVR__GT85LTET91', 'IRALCFY__GT365LTET991', 
+        'IRALCAGE__GT100LTET991','IRALCFY__GT991LTET993'])
+    
+    #Never Used Marijuana (keeping IRMJRC)
+    #Note, 991 is 'used ever', and 993 is 'used in past year'. They're both duplicates
+    #of other options, but not of each other.
+    colsToDrop.extend(['IRMJFY__GT991LTET993','IRMJFY__GT365LTET991'])
+    
+    #Never Used Tobacco
+    colsToDrop.extend(['CIGAGE__GT985LTET991','CIGDLYMO__GT2LTET91',
+        'CIGDLYMO__GT1LTET2'])
+        
+    #Mental Health
+    colsToDrop.extend(['ADDPREV__GT97LTET98'])
+        
+    #Perform the actual drop
+    for col in colsToDrop:
+        dfIn.drop([col], axis=1, inplace=True)
+        
+        
     return dfIn
