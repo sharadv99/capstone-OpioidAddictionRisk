@@ -111,7 +111,7 @@ def preprocess(dfIn):
     cutPoints = [0,1,2,3,9]
     dfIn = prepBin(dfIn, 'IRMJRC', cutPoints)
 
-    cutPoints = [0,1,2,3,7,10,20,30,40,50,100,200,300,365,985,991,993]
+    cutPoints = [0,1,2,3,7,10,20,30,40,50,100,200,300,365,991,993]
     dfIn = prepBin(dfIn, 'IRMJFY', cutPoints)  #Days used weed in past year
     '''Codes:
     0-365 = Days
@@ -182,7 +182,7 @@ def preprocess(dfIn):
     #Other
     prepRecode(dfIn, 'BOOKED', {1:1,2:2,3:1,85:85,94:94,97:97,98:98})
     #dfIn = prepOneHot(dfIn, 'BOOKED')
-    cutPoints = [0,1,2,3,85,94,97,98]
+    cutPoints = [0,1,2,94,97]  #BOOKED HAS NO DATA FOR 3 (because we recoded it as 1), 85, or 98.
     dfIn = prepBin(dfIn, 'BOOKED', cutPoints)
 
     #Age
