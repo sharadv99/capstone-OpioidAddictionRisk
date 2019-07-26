@@ -119,3 +119,12 @@ def generateReport(inputDict):
     predFI = dict(sorted(shapDict.items(), key=operator.itemgetter(1)))
     
     return predProb, predPercentile, predFI
+    
+def prepAge(intIn):
+    '''Quick function to take an integer age as entered on the web form and emit
+    the age code (integers 1 - 17)as defined in the codebook.  This function is
+    used to pass the expected age code to the preprocess function.    
+    '''
+    
+    cutPointsArr = np.array([-99,12,13,14,15,16,17,18,19,20,21,23,25,29,34,49,64,150])
+    return np.argmax(cutPointsArr >= intIn)
