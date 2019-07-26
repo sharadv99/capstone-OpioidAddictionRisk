@@ -104,6 +104,7 @@ def generateReport(inputDict):
     #Get everything before the '_' character of each column name
     #Then create the column index numbers for those keys 
     #These numbers correspond to the locations in the shapley output array
+    
     for i, colName in enumerate(colNamesList):
         shapDict[colName.split('_')[0]].append(i)        
         
