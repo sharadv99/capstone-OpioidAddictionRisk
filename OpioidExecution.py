@@ -37,6 +37,8 @@ outputDict {dictionary}: The outputs of the report of format
             feature to the user's predicted probability of opioid misuse (predProb).
 '''
 
+import numpy as np
+
 def generateReport(inputDict):
     
     ##### 0. Load Libraries and Set Global Variables
