@@ -127,7 +127,7 @@ def preprocess(dfIn):
     #'TXYRRECVD2' #No action required, just including here for completeness
     #'TXEVRRCVD2' #No action required, just including here for completeness
     
-    #The cutpoints for the following hard drugs are all the same (no need to redefine every time)
+    #The cutPoints for the following hard drugs are all the same (no need to redefine every time)
     cutPoints = [0,1,2,3,9]
     dfIn = prepBin(dfIn, 'IRCOCRC', cutPoints)
     dfIn = prepBin(dfIn, 'IRCRKRC', cutPoints)
@@ -228,3 +228,12 @@ def preprocess(dfIn):
         
         
     return dfIn
+
+def prepAge(intIn):
+    '''Quick function to take an integer age as entered on the web form and emit
+    the age code (integers 1 - 17)as defined in the codebook.  This function is
+    used to pass the expected age code to the preprocess function.    
+    '''
+    
+    cutPointsArr = np.array([-99,12,13,14,15,16,17,18,19,20,21,23,25,29,34,49,64,150])
+    return np.argmax(cutPointsArr >= intIn)
