@@ -105,9 +105,10 @@ def preprocess(dfIn):
     
     #'TOBYR' #No action required, just including here for completeness
     
-    prepRecode(dfIn, 'CIGDLYMO', {1:1,2:2,5:1,91:91,94:94,97:97,98:98})
-    cutPoints = [0,1,2,91,94,97]
-    dfIn = prepBin(dfIn, 'CIGDLYMO', cutPoints)
+    #REMOVING CIGDLYMO BECAUSE ALL IT'S OPTIONS ARE MULTICOLLINEAR WITH OTHER VARIABLES
+	#prepRecode(dfIn, 'CIGDLYMO', {1:1,2:2,5:1,91:91,94:94,97:97,98:98})
+    #cutPoints = [0,1,2,91,94,97]
+    #dfIn = prepBin(dfIn, 'CIGDLYMO', cutPoints)
 
     #Weed
     cutPoints = [0,1,2,3,9]
@@ -216,8 +217,8 @@ def preprocess(dfIn):
     colsToDrop.extend(['IRMJFY__GT991LTET993','IRMJFY__GT365LTET991'])
     
     #Never Used Tobacco
-    colsToDrop.extend(['CIGAGE__GT985LTET991','CIGDLYMO__GT2LTET91',
-        'CIGDLYMO__GT1LTET2'])
+    colsToDrop.extend(['CIGAGE__GT985LTET991'])
+    #colsToDrop.extend(['CIGDLYMO__GT2LTET91','CIGDLYMO__GT1LTET2'])
         
     #Mental Health
     colsToDrop.extend(['ADDPREV__GT97LTET98'])
