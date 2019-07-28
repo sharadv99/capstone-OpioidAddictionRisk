@@ -82,9 +82,9 @@ def generateReport(inputDict):
     ##### 2. Generate Predictions
     
     #Load Models
-    model = joblib.load(dataDir+'calibLR.model')
-    explainer = joblib.load(dataDir+'modelLRCal.explainer')
-    probs = np.load(dataDir+'modelLRCalPredProbs.npy')
+    model = joblib.load(dataDir+'calibXGB.model')
+    explainer = joblib.load(dataDir+'modelXGBCal.explainer')
+    probs = np.load(dataDir+'modelXGBCalPredProbs.npy')
     
     #Load feature names (column names)
     colNamesList = joblib.load(dataDir+'colNamesList.zip')
