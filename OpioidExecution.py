@@ -131,3 +131,50 @@ def prepAge(intIn):
     
     cutPointsArr = np.array([-99,12,13,14,15,16,17,18,19,20,21,23,25,29,34,49,64,150])
     return np.argmax(cutPointsArr >= intIn)
+	
+def getFriendlyVarNames():
+    dictFriendlyVarNames = \
+	    {'IRSEX': 'Gender',
+         'EDUHIGHCAT':'Highest Education',
+         'AGE2':'Age',
+                        
+         #ALCOHOL
+         'IRALCRC':'Alcohol Recency',
+         'IRALCFY':'Alcohol Frequency ',
+         'CABINGEVR':'Binge Drinking',
+         'IRALCAGE':'Age First Used Alcohol',
+ 
+         #DRUGS + ALCOHOL
+         'TXYRRECVD2':'Alc/Drug Tx, Past Yr',
+         'TXEVRRCVD2':'Alc/Drug Tx, Lifetime',
+ 
+         #TOBACCO
+         'IRCIGRC':'Cigarette Recency',
+         'CIGAGE':'Daily Cigarette Use Age',
+         'TOBYR':'Tobacco Use, Past Year',
+         'FUCIG18':'Cigarettes Under 18',
+ 
+         #WEED
+         'IRMJRC':'Marijuana Recency',
+         'IRMJFY':'Marijuana Frequency',
+         'FUMJ18':'Marijuana Under 18',
+ 
+         #Hard Drugs
+         'IRCOCRC':'Cocaine Recency',
+         'IRCRKRC':'Crack Recency',
+         'IRHERRC':'Heroine Recency',
+         'IRHALLUCREC':'Hallucinogen Recency',
+         'IRLSDRC':'LSD Recency',
+         'IRECSTMOREC':'Ecstacy Recency',
+         'IRINHALREC':'Inhalant Recency',
+         'IRMETHAMREC':'Meth Recency',
+ 
+         #DEPRESSION
+         'ADDPREV':'Multi-Day Depression',
+         'ADDSCEV':'Multi-Day Discouraged',
+ 
+         ##OTHER
+         'BOOKED':'Arrested and Booked',
+        }
+
+    return dictFriendlyVarNames
