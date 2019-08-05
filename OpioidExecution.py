@@ -39,7 +39,7 @@ outputDict {dictionary}: The outputs of the report of format
 
 import numpy as np
 
-def generateReport(inputDict):
+def generateReport(inputDict, useXGBCal=True):
     
     ##### 0. Load Libraries and Set Global Variables
     
@@ -82,9 +82,14 @@ def generateReport(inputDict):
     ##### 2. Generate Predictions
     
     #Load Models
-    model = joblib.load(dataDir+'calibXGB.model')
-    explainer = joblib.load(dataDir+'modelXGBCal.explainer')
-    probs = np.load(dataDir+'modelXGBCalPredProbs.npy')
+    if useXGBCal:
+        model = joblib.load(dataDir+'calibXGB.model')
+        explainer = joblib.load(dataDir+'modelXGBCal.explainer')
+        probs = np.load(dataDir+'modelXGBCalPredProbs.npy')
+    else:
+        model = joblib.load(dataDir+'calibLR.model')
+        explainer = joblib.load(dataDir+'modelLRCal.explainer')
+        probs = np.load(dataDir+'modelLRCalPredProbs.npy')
     
     #Load feature names (column names)
     colNamesList = joblib.load(dataDir+'colNamesList.zip')
@@ -131,10 +136,10 @@ def prepAge(intIn):
     
     cutPointsArr = np.array([-99,12,13,14,15,16,17,18,19,20,21,23,25,29,34,49,64,150])
     return np.argmax(cutPointsArr >= intIn)
-	
+    
 def getFriendlyVarNames():
     dictFriendlyVarNames = \
-	    {'IRSEX': 'Gender',
+        {'IRSEX': 'Gender',
          'EDUHIGHCAT':'Highest Education',
          'AGE2':'Age',
                         
