@@ -37,7 +37,7 @@ Tech Stack/Methods
 Key Files
 -----------
 
-- `NSDUH-20**-DS0001-info-codebook.pdf`: This PDF file is the National Survey on Drug Use and Health codebook that contains all the variable names and details of the survey.
+- `NSDUH-2017-DS0001-info-codebook.pdf`: This PDF file is the National Survey on Drug Use and Health codebook that contains all the variable names and details of the survey.
 - `Opioid_01LoadData.ipynb`: This brief file loads data.pickle.zip and adds the outcome variable for Opioid Misuse, saving its output to ./data/misuse.pickle.zip
 - `Opioid_02EDA.ipynb`: Loads ./data/misuse.pickle.zip and performs some exploratory data analysis. It is not necessary for developing the model, but contains the Weighted Standard Deviation calculations that were instrumental in selecting the variables in the - Opioid_03FeatureSel.ipynb file.
 - `Opioid_03FeatureSel.ipynb`: This file performs two tasks. 1) It reduces the feature space from 2,631 potential input variables (columns) down to the 28 variables that are used to build the model and correspondingly asked in the web app input form. 2) It executes the data preprocessing module OpioidDataPrep.py used to one hot encode and bucket the variables for input into the model.
