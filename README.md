@@ -31,6 +31,6 @@ Tech Stack/Methods
 - FusionCharts
 
 
-For a comprehensive discussion on the problem motivating the solution (ie. Opioid Crisis), the tool's technical design/workflow, model performance, and instructions for using the tool, please visit our [website](https://opioidmisuserisk.github.io/)
+For a comprehensive discussion on the problem motivating the solution (ie. Opioid Crisis), the tool's technical design/workflow, model performance, instructions for using the tool, etc. please visit our [website](https://opioidmisuserisk.github.io/)
 
 You can access the tool directly from our website, or by clicking [here](https://opioidrisk.herokuapp.com/polls)
