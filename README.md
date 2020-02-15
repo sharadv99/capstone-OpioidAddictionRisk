@@ -3,9 +3,6 @@
 --Data Science project at UC Berkeley--  
 --In collaboration with Cameron Kennedy, Aditi Khullar, Rachel Kramer--  
 
-For a comprehensive discussion on the problem motivating the solution (ie. Opioid Crisis), the tool's technical design/workflow, model performance, and instructions for using the tool, please visit our [website](https://opioidmisuserisk.github.io/)
-
-You can access the tool directly from our website, or by clicking [here](https://opioidrisk.herokuapp.com/polls)
 
 Description
 -----------
@@ -33,3 +30,7 @@ Tech Stack/Methods
 - Heroku
 - FusionCharts
 
+
+For a comprehensive discussion on the problem motivating the solution (ie. Opioid Crisis), the tool's technical design/workflow, model performance, and instructions for using the tool, please visit our [website](https://opioidmisuserisk.github.io/)
+
+You can access the tool directly from our website, or by clicking [here](https://opioidrisk.herokuapp.com/polls)
