@@ -1,9 +1,10 @@
 # Opioid Misuse Risk Tool
 
---Data Science project at UC Berkeley--
---In collaboration with Cameron Kennedy, Aditi Khullar, Rachel Kramer--
+--Data Science project at UC Berkeley--  
+--In collaboration with Cameron Kennedy, Aditi Khullar, Rachel Kramer--  
 
-<u>Description</u>
+Description
+===========
 
 The Opioid Misuse Risk Tool is a custom web-app that uses machine learning to impact the opioid crisis, specifically by enabling physicians to make more informed decisions about prescribing opioids. Patients submit responses to ~25 demographic and health related questions, which triggers the data pipeline to output a report detailing their personalized probability of opioid misuse (risk score), their percentile of misuse among all patients, and the impact that each of their responses has on their risk score. A calibrated XG Boost model produces the risk score, with Shapley values generating the contributions of individualized risk factors.
 
