@@ -1,7 +1,7 @@
 # Opioid Misuse Risk Tool
 
 --Data Science project at UC Berkeley--  
---In collaboration with Cameron Kennedy, Aditi Khullar, Rachel Kramer--  
+--Team: [Sharad Varadarajan](https://www.linkedin.com/in/sharadv/), [Cameron Kennedy](https://www.linkedin.com/in/cameron-kennedy-profile/), [Aditi Khullar](https://www.linkedin.com/in/aditikhullar/), [Rachel Kramer](https://www.linkedin.com/in/rachel-kramer-483b5936/)--  
 
 
 Description
